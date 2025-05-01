@@ -233,7 +233,7 @@
         display: block;
     }
     
-    /* Estilos para metas de ahorro */
+    
     .progress-bar {
         width: 100%;
         background-color: #e0e0e0;
@@ -279,17 +279,16 @@
         font-size: 14px;
     }
     
-/* Aumentar tamaño de botones para accesibilidad (mínimo 44px de alto) */
+
 button, .menu-content a {
     min-height: 44px;
 }
 
-/* Prevenir zoom al enfocar inputs en iOS */
+
 input, select, textarea {
     font-size: 16px;
 }
 
-/* Modo oscuro automático */
 @media (prefers-color-scheme: dark) {
     body { background-color: #121212; color: #f1f1f1; }
     header, footer { background-color: #6a1231; color: #fff; }
@@ -300,7 +299,6 @@ input, select, textarea {
 }
 
 
-/* Mejorar sección presupuestos en pantallas grandes */
 @media (min-width: 992px) {
   #budgets-section .card {
     max-width: 600px;
@@ -308,10 +306,6 @@ input, select, textarea {
   }
 }
 
-
-/* === Mejoras de responsividad añadidas por ChatGPT === */
-
-/* Mejorar menú en móviles */
 @media (max-width: 480px) {
     .header-content {
         flex-direction: column;
@@ -330,7 +324,6 @@ input, select, textarea {
     }
 }
 
-/* Mejorar tamaños y espaciados en pantallas pequeñas */
 @media (max-width: 480px) {
     h1 {
         font-size: 24px;
@@ -353,14 +346,12 @@ input, select, textarea {
     }
 }
 
-/* Ajustar columnas a 2 en pantallas medianas */
 @media (min-width: 600px) and (max-width: 991px) {
     .dashboard {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Mejorar visualización de transacciones y gráficos en móvil */
 @media (max-width: 480px) {
     .transaction-item {
         flex-direction: column;
@@ -374,7 +365,7 @@ input, select, textarea {
     }
 }
 
-/* Footer más compacto en móvil */
+
 @media (max-width: 480px) {
     footer p {
         font-size: 14px;
@@ -455,7 +446,7 @@ input, select, textarea {
                         <label for="category">Categoría</label>
                         <select id="category" required>
                             <option value="">Selecciona una categoría</option>
-                            <!-- Las categorías se cargarán dinámicamente según el tipo -->
+                           
                         </select>
                     </div>
                     
@@ -473,7 +464,7 @@ input, select, textarea {
                     <h2>Distribución de Gastos</h2>
                 </div>
                 <div class="chart-container" id="expense-chart">
-                    <!-- genera las graficas -->
+                    
                     <p style="text-align: center; padding-top: 120px;">Añade transacciones para ver el gráfico</p>
                 </div>
             </div>
@@ -485,13 +476,13 @@ input, select, textarea {
                 <button id="clear-transactions" class="btn-danger">Borrar Todo</button>
             </div>
             <div class="transactions" id="transaction-list">
-                <!-- muestra transacciones -->
+               
                 <p style="text-align: center; padding: 20px;">No hay transacciones</p>
             </div>
         </div>
     </div></div>
 
-    <!-- Sección de Metas de Ahorro -->
+    
 <div id="savings-section" class="section">
     <div class="dashboard">
         <div class="card">
@@ -528,14 +519,14 @@ input, select, textarea {
                 <h2>Mis Metas de Ahorro</h2>
             </div>
             <div id="savings-list">
-                <!-- Las metas se cargarán dinámicamente aquí -->
+                
                 <p style="text-align: center; padding: 20px;">No hay metas de ahorro</p>
             </div>
         </div>
     </div>
  </div>
 
-    <!-- Sección de Control de Deudas -->
+    
   <div id="debts-section" class="section">
     <div class="dashboard">
         <div class="card">
@@ -577,7 +568,7 @@ input, select, textarea {
                 <h2>Mis Deudas</h2>
             </div>
             <div id="debts-list">
-                <!-- Las deudas se cargarán dinámicamente aquí -->
+               
                 <p style="text-align: center; padding: 20px;">No hay deudas registradas</p>
             </div>
         </div>
@@ -586,7 +577,7 @@ input, select, textarea {
 
     
     
-<!-- Sección de Reportes / Historial -->
+
 <div id="reports-section" class="section">
 
 <div class="card">
@@ -617,17 +608,12 @@ input, select, textarea {
     </div>
 </div>
 
-    <div class="dashboard">
-        <div class="card">
-            <div class="card-header">
-                <h2>Reportes / Historial</h2>
-            </div>
-            <p style="padding: 20px;">Aquí podrás consultar reportes detallados de tus ingresos, gastos y transacciones por categoría. (Funcionalidad en desarrollo)</p>
+
         </div>
     </div>
 </div>
 
-<!-- Sección de Presupuestos -->
+
 <div id="budgets-section" class="section">
 
 <div class="card">
@@ -666,20 +652,20 @@ input, select, textarea {
     </footer>
 
     <script>
-        // Categorías para ingresos y gastos
+        
         const categories = {
             income: ['Salario', 'Inversiones', 'Regalos', 'Ventas', 'Otros'],
             expense: ['Alimentación', 'Vivienda', 'Transporte', 'Ocio', 'Salud', 'Educación', 'Deudas', 'Otros']
         };
         
-        // Elemento select de categorías
+        
         const categorySelect = document.getElementById('category');
         const typeSelect = document.getElementById('type');
         
-        // Cargar categorías según el tipo de transacción
+        
         typeSelect.addEventListener('change', updateCategories);
         
-        // Función para actualizar las categorías disponibles
+        
         function updateCategories() {
             const type = typeSelect.value;
             categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
@@ -692,13 +678,13 @@ input, select, textarea {
             });
         }
         
-        // Inicializar las categorías
+       
         updateCategories();
         
-        // Establecer la fecha de hoy como valor predeterminado
+      
         document.getElementById('date').valueAsDate = new Date();
         
-        // Elementos del DOM
+      
         const transactionForm = document.getElementById('transaction-form');
         const transactionList = document.getElementById('transaction-list');
         const totalBalanceEl = document.getElementById('total-balance');
@@ -706,15 +692,15 @@ input, select, textarea {
         const totalExpensesEl = document.getElementById('total-expenses');
         const clearButton = document.getElementById('clear-transactions');
         
-        // Cargar transacciones guardadas
+       
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
         
-        // Función para guardar transacciones en localStorage
+       
         function saveTransactions() {
             localStorage.setItem('transactions', JSON.stringify(transactions));
         }
         
-        // Función para calcular y actualizar el balance
+        
         function updateBalance() {
             const income = transactions
                 .filter(transaction => transaction.type === 'income')
@@ -730,7 +716,7 @@ input, select, textarea {
             totalIncomeEl.textContent = formatCurrency(income);
             totalExpensesEl.textContent = formatCurrency(expenses);
             
-            // Cambiar color del balance según sea positivo o negativo
+          
             totalBalanceEl.className = 'balance';
             if (balance > 0) {
                 totalBalanceEl.classList.add('positive');
@@ -739,12 +725,11 @@ input, select, textarea {
             }
         }
         
-        // Formatear número a moneda (EUR)
         function formatCurrency(amount) {
             return 'Q' + amount.toFixed(2);
         }
         
-        // Manejar envío del formulario
+        
         transactionForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -759,7 +744,7 @@ input, select, textarea {
                 return;
             }
             
-            // Crear objeto de transacción
+            
             const transaction = {
                 id: Date.now(),
                 description,
@@ -769,24 +754,23 @@ input, select, textarea {
                 date
             };
             
-            // Añadir a la lista de transacciones
+            
             transactions.push(transaction);
             
-            // Guardar y actualizar UI
+           
             saveTransactions();
             updateTransactionList();
             updateBalance();
             updateChart();
             
-            // Reiniciar formulario
+           
             transactionForm.reset();
             document.getElementById('date').valueAsDate = new Date();
             updateCategories();
         });
         
-        // Función para actualizar la lista de transacciones
         function updateTransactionList() {
-            // Ordenar transacciones por fecha, más reciente primero
+            
             const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
             
             if (sortedTransactions.length === 0) {
@@ -816,11 +800,11 @@ input, select, textarea {
             });
         }
         
-        // Función para actualizar el gráfico de distribución de gastos
+        
         function updateChart() {
             const expenseChart = document.getElementById('expense-chart');
             
-            // Filtrar solo los gastos
+            
             const expenses = transactions.filter(t => t.type === 'expense');
             
             if (expenses.length === 0) {
@@ -828,7 +812,7 @@ input, select, textarea {
                 return;
             }
             
-            // Agrupar gastos por categoría
+            
             const expensesByCategory = {};
             let totalExpenses = 0;
             
@@ -840,7 +824,7 @@ input, select, textarea {
                 totalExpenses += expense.amount;
             });
             
-            // Crear el gráfico simple de barras
+           
             expenseChart.innerHTML = '';
             
             const colors = [
@@ -853,7 +837,7 @@ input, select, textarea {
             
             for (const category in expensesByCategory) {
                 const percentage = (expensesByCategory[category] / totalExpenses) * 100;
-                const height = Math.max(percentage * 2, 10); // Al menos 10px de altura
+                const height = Math.max(percentage * 2, 10); 
                 
                 html += `
                     <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
@@ -870,7 +854,7 @@ input, select, textarea {
             expenseChart.innerHTML = html;
         }
         
-        // Borrar todas las transacciones
+       
         clearButton.addEventListener('click', function() {
             if (confirm('¿Estás seguro de que deseas borrar todas las transacciones?')) {
                 transactions = [];
@@ -881,16 +865,16 @@ input, select, textarea {
             }
         });
         
-        // Inicializar la aplicación
+       
         updateTransactionList();
         updateBalance();
         updateChart();
 
-        // Variables para las nuevas funcionalidades
+      
     let savingsGoals = JSON.parse(localStorage.getItem('savingsGoals')) || [];
     let debts = JSON.parse(localStorage.getItem('debts')) || [];
     
-    // Elementos del menú
+    
     const menuButton = document.getElementById('menu-button');
     const menuDropdown = document.getElementById('menu-dropdown');
     const menuDashboard = document.getElementById('menu-dashboard');
@@ -913,21 +897,21 @@ menuBudgets.addEventListener('click', function(e) {
 });
 
     
-    // Secciones
+   
     const dashboardSection = document.getElementById('dashboard-section');
     const savingsSection = document.getElementById('savings-section');
     const debtsSection = document.getElementById('debts-section');
     
-    // Formularios
+    
     const savingsForm = document.getElementById('savings-form');
     const debtForm = document.getElementById('debt-form');
     
-    // Listas
+   
     const savingsList = document.getElementById('savings-list');
     const debtsList = document.getElementById('debts-list');
     
     
-// Mejor compatibilidad táctil (añadir touchstart además de click)
+
 ['click', 'touchstart'].forEach(evt => {
     menuButton.addEventListener(evt, function(e) {
         e.stopPropagation();
@@ -935,7 +919,7 @@ menuBudgets.addEventListener('click', function(e) {
     });
 });
 
-// Cierre de menú más robusto (touch o click fuera)
+
 ['click', 'touchstart'].forEach(evt => {
     window.addEventListener(evt, function(event) {
         if (!menuDropdown.contains(event.target) && !menuButton.contains(event.target)) {
@@ -944,12 +928,12 @@ menuBudgets.addEventListener('click', function(e) {
     });
 });
 
-// Mostrar/ocultar menú desplegable
+
     menuButton.addEventListener('click', function() {
         menuDropdown.classList.toggle('show');
     });
     
-    // Cerrar el menú al hacer clic fuera de él
+    
     window.addEventListener('click', function(event) {
         if (!event.target.matches('.menu-button') && !event.target.parentNode.matches('.menu-button')) {
             if (menuDropdown.classList.contains('show')) {
@@ -958,7 +942,7 @@ menuBudgets.addEventListener('click', function(e) {
         }
     });
     
-    // Cambiar entre secciones
+    
     menuDashboard.addEventListener('click', function(e) {
         e.preventDefault();
         showSection(dashboardSection);
@@ -975,26 +959,24 @@ menuBudgets.addEventListener('click', function(e) {
     });
     
     function showSection(section) {
-        // Ocultar todas las secciones
+       
         dashboardSection.classList.remove('active');
         savingsSection.classList.remove('active');
         debtsSection.classList.remove('active');
         reportsSection.classList.remove('active');
         budgetsSection.classList.remove('active');
         
-        // Mostrar la sección seleccionada
+        
         section.classList.add('active');
         
-        // Cerrar el menú
+       
         menuDropdown.classList.remove('show');
     }
     
-    // Inicializar con la sección del dashboard activa
+  
     showSection(dashboardSection);
     
-    // ---- FUNCIONES PARA METAS DE AHORRO ----
-    
-    // Crear una nueva meta de ahorro
+   
     savingsForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -1003,7 +985,7 @@ menuBudgets.addEventListener('click', function(e) {
         const date = document.getElementById('goal-date').value;
         const saved = parseFloat(document.getElementById('current-saved').value) || 0;
         
-        // Crear objeto de meta
+       
         const goal = {
             id: Date.now(),
             name,
@@ -1012,24 +994,24 @@ menuBudgets.addEventListener('click', function(e) {
             saved
         };
         
-        // Añadir a la lista de metas
+        
         savingsGoals.push(goal);
         
-        // Guardar y actualizar UI
+        
         saveSavingsGoals();
         updateSavingsList();
         
-        // Reiniciar formulario
+        
         savingsForm.reset();
         document.getElementById('goal-date').valueAsDate = new Date(Date.now() + 30*24*60*60*1000); // +30 días por defecto
     });
     
-    // Guardar metas en localStorage
+   
     function saveSavingsGoals() {
         localStorage.setItem('savingsGoals', JSON.stringify(savingsGoals));
     }
     
-    // Actualizar lista de metas
+    
     function updateSavingsList() {
         if (savingsGoals.length === 0) {
             savingsList.innerHTML = '<p style="text-align: center; padding: 20px;">No hay metas de ahorro</p>';
@@ -1066,7 +1048,7 @@ menuBudgets.addEventListener('click', function(e) {
             savingsList.appendChild(goalEl);
         });
         
-        // Añadir evento a los botones de añadir ahorro
+       
         document.querySelectorAll('.add-savings').forEach(button => {
             button.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -1077,7 +1059,7 @@ menuBudgets.addEventListener('click', function(e) {
                 if (!isNaN(amount) && amount > 0) {
                     goal.saved += amount;
                     
-                    // Crear transacción de ahorro
+                    
                     const transaction = {
                         id: Date.now(),
                         description: `Ahorro para: ${goal.name}`,
@@ -1087,21 +1069,21 @@ menuBudgets.addEventListener('click', function(e) {
                         date: new Date().toISOString().split('T')[0]
                     };
                     
-                    // Añadir a la lista de transacciones
+                   
                     transactions.push(transaction);
                     saveTransactions();
                     updateTransactionList();
                     updateBalance();
                     updateChart();
                     
-                    // Actualizar metas
+                   
                     saveSavingsGoals();
                     updateSavingsList();
                 }
             });
         });
         
-        // Añadir evento a los botones de eliminar meta
+       
         document.querySelectorAll('.delete-goal').forEach(button => {
             button.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -1116,9 +1098,7 @@ menuBudgets.addEventListener('click', function(e) {
         });
     }
     
-    // ---- FUNCIONES PARA CONTROL DE DEUDAS ----
-    
-    // Crear una nueva deuda
+   
     debtForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -1128,7 +1108,7 @@ menuBudgets.addEventListener('click', function(e) {
         const interest = parseFloat(document.getElementById('debt-interest').value) || 0;
         const date = document.getElementById('debt-date').value || null;
         
-        // Crear objeto de deuda
+        
         const debt = {
             id: Date.now(),
             name,
@@ -1139,28 +1119,28 @@ menuBudgets.addEventListener('click', function(e) {
             isPaid: false
         };
         
-        // Comprobar si ya está pagada
+        
         if (paid >= amount) {
             debt.isPaid = true;
         }
         
-        // Añadir a la lista de deudas
+        
         debts.push(debt);
         
-        // Guardar y actualizar UI
+        
         saveDebts();
         updateDebtsList();
         
-        // Reiniciar formulario
+        
         debtForm.reset();
     });
     
-    // Guardar deudas en localStorage
+    
     function saveDebts() {
         localStorage.setItem('debts', JSON.stringify(debts));
     }
     
-    // Actualizar lista de deudas
+    
     function updateDebtsList() {
         if (debts.length === 0) {
             debtsList.innerHTML = '<p style="text-align: center; padding: 20px;">No hay deudas registradas</p>';
@@ -1210,7 +1190,7 @@ menuBudgets.addEventListener('click', function(e) {
             debtsList.appendChild(debtEl);
         });
         
-        // Añadir evento a los botones de añadir pago
+        
         document.querySelectorAll('.add-payment').forEach(button => {
             button.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -1221,12 +1201,12 @@ menuBudgets.addEventListener('click', function(e) {
                 if (!isNaN(amount) && amount > 0) {
                     debt.paid += amount;
                     
-                    // Comprobar si ya está pagada
+                   
                     if (debt.paid >= debt.amount) {
                         debt.isPaid = true;
                     }
                     
-                    // Crear transacción de pago de deuda
+                    
                     const transaction = {
                         id: Date.now(),
                         description: `Pago de deuda: ${debt.name}`,
@@ -1236,21 +1216,21 @@ menuBudgets.addEventListener('click', function(e) {
                         date: new Date().toISOString().split('T')[0]
                     };
                     
-                    // Añadir a la lista de transacciones
+                    
                     transactions.push(transaction);
                     saveTransactions();
                     updateTransactionList();
                     updateBalance();
                     updateChart();
                     
-                    // Actualizar deudas
+                  
                     saveDebts();
                     updateDebtsList();
                 }
             });
         });
         
-        // Añadir evento a los botones de eliminar deuda
+       
         document.querySelectorAll('.delete-debt').forEach(button => {
             button.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -1266,21 +1246,21 @@ menuBudgets.addEventListener('click', function(e) {
     }
     
     
-// Variables Reportes
+
 const reportTotalIncome = document.getElementById('report-total-income');
 const reportTotalExpense = document.getElementById('report-total-expense');
 const reportBalance = document.getElementById('report-balance');
 const reportList = document.getElementById('report-list');
 const reportFilter = document.getElementById('report-filter');
 
-// Variables Presupuestos
+
 let budgets = JSON.parse(localStorage.getItem('budgets')) || [];
 const budgetForm = document.getElementById('budget-form');
 const budgetCategorySelect = document.getElementById('budget-category');
 const budgetAmountInput = document.getElementById('budget-amount');
 const budgetList = document.getElementById('budget-list');
 
-// Rellenar categorías en Presupuestos (solo gastos)
+
 function populateBudgetCategories() {
     budgetCategorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
     categories.expense.forEach(cat => {
@@ -1291,7 +1271,7 @@ function populateBudgetCategories() {
     });
 }
 
-// FUNCIONES REPORTES
+
 function updateReport() {
     const filter = reportFilter.value;
     let filteredTx = [...transactions];
@@ -1322,7 +1302,7 @@ function updateReport() {
         });
     }
 
-    // Calcular resumen
+   
     const income = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
     const expense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
     const balance = income - expense;
@@ -1332,7 +1312,6 @@ function updateReport() {
     reportBalance.textContent = 'Q' + balance.toFixed(2);
 }
 
-// FUNCIONES PRESUPUESTOS
 
 budgetForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1405,16 +1384,13 @@ reportFilter.addEventListener('change', updateReport);
 
 
 
-// Actualizar las categorías añadiendo las nuevas
 categories.expense.push('Ahorro', 'Deudas');
 
-// Re-cargar presupuestos guardados por si acaso
 budgets = JSON.parse(localStorage.getItem('budgets')) || [];
 populateBudgetCategories();
 updateReport();
 updateBudgetList();
 
-// Inicializar la aplicación con las nuevas funcionalidades
 updateSavingsList();
 updateDebtsList();
 
