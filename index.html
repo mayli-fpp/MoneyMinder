@@ -495,9 +495,86 @@ input, select, textarea {
        <a href="#" id="menu-budgets">
         Presupuestos
        </a>
+       <li>
+        <a href="#" onclick="mostrarSeccion('metas')">
+         Metas
+        </a>
+       </li>
+       <li>
+        <a href="#" onclick="mostrarSeccion('tickets')">
+         Tickets
+        </a>
+       </li>
+       <li>
+        <a href="#" onclick="mostrarSeccion('presupuestos')">
+         Presupuestos
+        </a>
+       </li>
       </div>
      </div>
     </div>
+    <section class="section" id="metas">
+     <h2>
+      Simulador de Metas
+     </h2>
+     <div class="input-group">
+      <label>
+       Meta ($):
+      </label>
+      <input id="metaTotal" placeholder="Ej: 10000" type="number"/>
+     </div>
+     <div class="input-group">
+      <label>
+       Meses para lograrlo:
+      </label>
+      <input id="metaMeses" placeholder="Ej: 12" type="number"/>
+     </div>
+     <button class="btn" onclick="calcularMeta()">
+      Calcular
+     </button>
+     <p id="resultadoMeta">
+     </p>
+    </section>
+    <section class="section" id="tickets">
+     <h2>
+      Escaneo de Tickets (Ingreso Manual)
+     </h2>
+     <div class="input-group">
+      <label>
+       Monto ($):
+      </label>
+      <input id="ticketMonto" placeholder="Ej: 250" type="number"/>
+     </div>
+     <div class="input-group">
+      <label>
+       Categor&iacute;a:
+      </label>
+      <select id="ticketCategoria">
+       <option>
+        Comida
+       </option>
+       <option>
+        Transporte
+       </option>
+       <option>
+        Entretenimiento
+       </option>
+       <option>
+        Otros
+       </option>
+      </select>
+     </div>
+     <button class="btn" onclick="agregarGastoManual()">
+      Agregar Gasto
+     </button>
+    </section>
+    <section class="section" id="presupuestos">
+     <h2>
+      Presupuesto por Categor&iacute;a
+     </h2>
+     <canvas height="200" id="presupuestoChart">
+     </canvas>
+    </section>
    </div>
   </header>
   <div class="section active" id="dashboard-section">
@@ -1819,6 +1896,20 @@ function actualizarGraficoPresupuesto() {
 
 // Inicializar gráfico al cargar
 document.addEventListener('DOMContentLoaded', actualizarGraficoPresupuesto);
+  </script>
+  <script>
+   function mostrarSeccion(id) {
+  var secciones = document.querySelectorAll('.section');
+  secciones.forEach(function(sec) { sec.style.display = 'none'; });
+  document.getElementById(id).style.display = 'block';
+}
+// Mostrar dashboard por defecto
+document.addEventListener('DOMContentLoaded', function() {
+  var secciones = document.querySelectorAll('.section');
+  secciones.forEach(function(sec) { sec.style.display = 'none'; });
+  var dashboard = document.querySelector('.section.active');
+  if (dashboard) dashboard.style.display = 'block';
+});
   </script>
  </body>
 </html>
