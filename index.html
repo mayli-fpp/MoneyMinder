@@ -423,6 +423,42 @@ input, select, textarea {
   margin-top: 15px;
 }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
+  <style>
+   .section-box {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+.section-box h3 {
+  margin-top: 0;
+}
+.input-group {
+  margin-bottom: 10px;
+}
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+.input-group input {
+  width: 100%;
+  padding: 5px;
+}
+.btn {
+  padding: 7px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn:hover {
+  background: #0056b3;
+}
+  </style>
  </head>
  <body>
   <header>
@@ -1641,6 +1677,148 @@ if (typeSelect.value === 'expense') {
   }
   suggestionBox.textContent = sugerencia;
 });
+  </script>
+  <div class="section-box">
+   <h3>
+    Simulador de Metas
+   </h3>
+   <div class="input-group">
+    <label>
+     Meta ($):
+    </label>
+    <input id="metaTotal" placeholder="Ej: 10000" type="number"/>
+   </div>
+   <div class="input-group">
+    <label>
+     Meses para lograrlo:
+    </label>
+    <input id="metaMeses" placeholder="Ej: 12" type="number"/>
+   </div>
+   <button class="btn" onclick="calcularMeta()">
+    Calcular
+   </button>
+   <p id="resultadoMeta">
+   </p>
+  </div>
+  <div class="section-box">
+   <h3>
+    Escaneo de Tickets (Ingreso Manual)
+   </h3>
+   <div class="input-group">
+    <label>
+     Monto ($):
+    </label>
+    <input id="ticketMonto" placeholder="Ej: 250" type="number"/>
+   </div>
+   <div class="input-group">
+    <label>
+     Categor&iacute;a:
+    </label>
+    <select id="ticketCategoria">
+     <option>
+      Comida
+     </option>
+     <option>
+      Transporte
+     </option>
+     <option>
+      Entretenimiento
+     </option>
+     <option>
+      Otros
+     </option>
+    </select>
+   </div>
+   <button class="btn" onclick="agregarGastoManual()">
+    Agregar Gasto
+   </button>
+  </div>
+  <div class="section-box">
+   <h3>
+    Presupuesto por Categor&iacute;a
+   </h3>
+   <canvas height="200" id="presupuestoChart">
+   </canvas>
+  </div>
+  <script>
+   let presupuestos = {
+  'Comida': { total: 1000, gastado: 0 },
+  'Transporte': { total: 800, gastado: 0 },
+  'Entretenimiento': { total: 500, gastado: 0 },
+  'Otros': { total: 700, gastado: 0 }
+};
+
+// Simulador de metas
+function calcularMeta() {
+  const total = parseFloat(document.getElementById('metaTotal').value);
+  const meses = parseInt(document.getElementById('metaMeses').value);
+  const resultado = document.getElementById('resultadoMeta');
+
+  if (total > 0 && meses > 0) {
+    const mensual = (total / meses).toFixed(2);
+    resultado.textContent = `Debes ahorrar $${mensual} por mes para alcanzar tu meta.`;
+  } else {
+    resultado.textContent = 'Por favor ingresa valores válidos.';
+  }
+}
+
+// Agregar gasto manual (tipo escaneo ticket)
+function agregarGastoManual() {
+  const monto = parseFloat(document.getElementById('ticketMonto').value);
+  const categoria = document.getElementById('ticketCategoria').value;
+
+  if (monto > 0) {
+    presupuestos[categoria].gastado += monto;
+    actualizarGraficoPresupuesto();
+    alert(`Se ha registrado un gasto de $${monto} en ${categoria}.`);
+  } else {
+    alert('Ingresa un monto válido.');
+  }
+}
+
+// Graficar presupuestos
+let chart;
+function actualizarGraficoPresupuesto() {
+  const labels = Object.keys(presupuestos);
+  const gastado = labels.map(cat => presupuestos[cat].gastado);
+  const disponible = labels.map(cat => Math.max(presupuestos[cat].total - presupuestos[cat].gastado, 0));
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Gastado',
+        data: gastado,
+        backgroundColor: 'rgba(255,99,132,0.6)'
+      },
+      {
+        label: 'Disponible',
+        data: disponible,
+        backgroundColor: 'rgba(75,192,192,0.6)'
+      }
+    ]
+  };
+
+  const ctx = document.getElementById('presupuestoChart').getContext('2d');
+  if (chart) {
+    chart.destroy();
+  }
+  chart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+// Inicializar gráfico al cargar
+document.addEventListener('DOMContentLoaded', actualizarGraficoPresupuesto);
   </script>
  </body>
 </html>
