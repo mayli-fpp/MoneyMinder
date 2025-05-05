@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <meta content="finanzas" name="description"/>
-  <meta content="Mayli" name="Autor"/>
-  <title>
-   Money minder
-  </title>
-  <style>
-   :root {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="finanzas">
+    <meta name="Autor" content="Mayli">
+    <title>Money minder</title>
+    <style>
+        :root {
             --color-primary: #9e2142;
             --color-secondary: #3498db;
             --color-accent: #27ae60;
@@ -382,552 +380,293 @@ input, select, textarea {
         font-size: 14px;
     }
 }
-  </style>
-  <link href="manifest.json" rel="manifest"/>
-  <meta content="#9e2142" name="theme-color"/>
-  <link href="icon-192.png" rel="apple-touch-icon"/>
-  <!-- Fase 1 - Integración de PWA -->
-  <link href="manifest.json" rel="manifest"/>
-  <meta content="#ffffff" name="theme-color"/>
-  <script>
-   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-        console.log('ServiceWorker registrado con éxito:', registration.scope);
-      }, function(err) {
-        console.log('ServiceWorker fallo en el registro:', err);
-      });
-    });
-  }
-  </script>
-  <style>
-   .medal-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 15px;
-}
-.medal {
-  padding: 10px;
-  background: gold;
-  border-radius: 8px;
-  font-weight: bold;
-  color: #333;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.suggestion-box {
-  background: #f0f8ff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 15px;
-}
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js">
-  </script>
-  <style>
-   .section-box {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-top: 20px;
-  border-radius: 8px;
-  background: #f9f9f9;
-}
-.section-box h3 {
-  margin-top: 0;
-}
-.input-group {
-  margin-bottom: 10px;
-}
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-.input-group input {
-  width: 100%;
-  padding: 5px;
-}
-.btn {
-  padding: 7px 15px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.btn:hover {
-  background: #0056b3;
-}
-  </style>
- </head>
- <body>
-  <header>
-   <div class="container">
+
+</style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9e2142">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+</head>
+<body>
+    
+<header>
+  <div class="container">
     <div class="header-content">
-     <div>
-      <h1>
-       MONEY MINDER
-      </h1>
-      <p>
-       Control de finanzas personales
-      </p>
-     </div>
-     <div class="main-menu">
-      <button class="menu-button" id="menu-button">
-       Men&uacute;
-       <span>
-        ▼
-       </span>
-      </button>
-      <div class="menu-content" id="menu-dropdown">
-       <a href="#" id="menu-dashboard">
-        Panel Principal
-       </a>
-       <a href="#" id="menu-savings">
-        Metas de Ahorro
-       </a>
-       <a href="#" id="menu-debts">
-        Control de Deudas
-       </a>
-       <a href="#" id="menu-reports">
-        Reportes / Historial
-       </a>
-       <a href="#" id="menu-budgets">
-        Presupuestos
-       </a>
-       <li>
-        <a href="#" onclick="mostrarSeccion('metas')">
-         Metas
-        </a>
-       </li>
-       <li>
-        <a href="#" onclick="mostrarSeccion('tickets')">
-         Tickets
-        </a>
-       </li>
-       <li>
-        <a href="#" onclick="mostrarSeccion('presupuestos')">
-         Presupuestos
-        </a>
-       </li>
-      </div>
-     </div>
-    </div>
-    <section class="section" id="metas">
-     <h2>
-      Simulador de Metas
-     </h2>
-     <div class="input-group">
-      <label>
-       Meta ($):
-      </label>
-      <input id="metaTotal" placeholder="Ej: 10000" type="number"/>
-     </div>
-     <div class="input-group">
-      <label>
-       Meses para lograrlo:
-      </label>
-      <input id="metaMeses" placeholder="Ej: 12" type="number"/>
-     </div>
-     <button class="btn" onclick="calcularMeta()">
-      Calcular
-     </button>
-     <p id="resultadoMeta">
-     </p>
-    </section>
-    <section class="section" id="tickets">
-     <h2>
-      Escaneo de Tickets (Ingreso Manual)
-     </h2>
-     <div class="input-group">
-      <label>
-       Monto ($):
-      </label>
-      <input id="ticketMonto" placeholder="Ej: 250" type="number"/>
-     </div>
-     <div class="input-group">
-      <label>
-       Categor&iacute;a:
-      </label>
-      <select id="ticketCategoria">
-       <option>
-        Comida
-       </option>
-       <option>
-        Transporte
-       </option>
-       <option>
-        Entretenimiento
-       </option>
-       <option>
-        Otros
-       </option>
-      </select>
-     </div>
-     <button class="btn" onclick="agregarGastoManual()">
-      Agregar Gasto
-     </button>
-    </section>
-    <section class="section" id="presupuestos">
-     <h2>
-      Presupuesto por Categor&iacute;a
-     </h2>
-     <canvas height="200" id="presupuestoChart">
-     </canvas>
-    </section>
-   </div>
-  </header>
-  <div class="section active" id="dashboard-section">
-   <div class="container">
+                <div>
+                    <h1>MONEY MINDER</h1>
+                    <p>Control de finanzas personales</p>
+                </div>
+                <div class="main-menu">
+                    <button class="menu-button" id="menu-button">
+                        Menú <span>▼</span>
+                    </button>
+                    <div class="menu-content" id="menu-dropdown">
+                        <a href="#" id="menu-dashboard">Panel Principal</a>
+                        <a href="#" id="menu-savings">Metas de Ahorro</a>
+                        <a href="#" id="menu-debts">Control de Deudas</a>
+
+<a href="#" id="menu-reports">Reportes / Historial</a>
+<a href="#" id="menu-budgets">Presupuestos</a>
+
+                    </div>
+  </div>
+</header>
+
+
+<div id="dashboard-section" class="section active">
+<div class="container">
+<div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Balance</h2>
+                </div>
+                <div class="balance" id="total-balance">Q.0.00</div>
+                <div class="summary">
+                    <div>Ingresos: <span id="total-income" class="positive">Q.0.00</span></div>
+                    <div>Gastos: <span id="total-expenses" class="negative">Q.0.00</span></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Añadir Transacción</h2>
+                </div>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="description">Descripción</label>
+                        <input type="text" id="description" placeholder="¿En qué gastaste/recibiste?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Cantidad (Q)</label>
+                        <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type">Tipo</label>
+                        <select id="type" required>
+                            <option value="income">Ingreso</option>
+                            <option value="expense">Gasto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Categoría</label>
+                        <select id="category" required>
+                            <option value="">Selecciona una categoría</option>
+                            <!-- Las categorías se cargarán dinámicamente según el tipo -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date">Fecha</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    
+                    <button type="submit">Añadir Transacción</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2>Distribución de Gastos</h2>
+                </div>
+                <div class="chart-container" id="expense-chart">
+                    <!-- genera las graficas -->
+                    <p style="text-align: center; padding-top: 120px;">Añade transacciones para ver el gráfico</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <h2>Últimas Transacciones</h2>
+                <button id="clear-transactions" class="btn-danger">Borrar Todo</button>
+            </div>
+            <div class="transactions" id="transaction-list">
+                <!-- muestra transacciones -->
+                <p style="text-align: center; padding: 20px;">No hay transacciones</p>
+            </div>
+        </div>
+    </div></div>
+
+    <!-- Sección de Metas de Ahorro -->
+<div id="savings-section" class="section">
     <div class="dashboard">
-     <div class="card">
-      <div class="card-header">
-       <h2>
-        Balance
-       </h2>
-      </div>
-      <div class="balance" id="total-balance">
-       Q.0.00
-      </div>
-      <div class="summary">
-       <div>
-        Ingresos:
-        <span class="positive" id="total-income">
-         Q.0.00
-        </span>
-       </div>
-       <div>
-        Gastos:
-        <span class="negative" id="total-expenses">
-         Q.0.00
-        </span>
-       </div>
-      </div>
-     </div>
-     <div class="card">
-      <div class="card-header">
-       <h2>
-        A&ntilde;adir Transacci&oacute;n
-       </h2>
-      </div>
-      <form id="transaction-form">
-       <div class="form-group">
-        <label for="description">
-         Descripci&oacute;n
-        </label>
-        <input id="description" placeholder="&iquest;En qu&eacute; gastaste/recibiste?" required="" type="text"/>
-       </div>
-       <div class="form-group">
-        <label for="amount">
-         Cantidad (Q)
-        </label>
-        <input id="amount" placeholder="0.00" required="" step="0.01" type="number"/>
-       </div>
-       <div class="form-group">
-        <label for="type">
-         Tipo
-        </label>
-        <select id="type" required="">
-         <option value="income">
-          Ingreso
-         </option>
-         <option value="expense">
-          Gasto
-         </option>
-        </select>
-       </div>
-       <div class="form-group">
-        <label for="category">
-         Categor&iacute;a
-        </label>
-        <select id="category" required="">
-         <option value="">
-          Selecciona una categor&iacute;a
-         </option>
-         <!-- Las categorías se cargarán dinámicamente según el tipo -->
-        </select>
-       </div>
-       <div class="form-group">
-        <label for="date">
-         Fecha
-        </label>
-        <input id="date" required="" type="date"/>
-       </div>
-       <button type="submit">
-        A&ntilde;adir Transacci&oacute;n
-       </button>
-      </form>
-     </div>
-     <div class="card">
-      <div class="card-header">
-       <h2>
-        Distribuci&oacute;n de Gastos
-       </h2>
-      </div>
-      <div class="chart-container" id="expense-chart">
-       <!-- genera las graficas -->
-       <p style="text-align: center; padding-top: 120px;">
-        A&ntilde;ade transacciones para ver el gr&aacute;fico
-       </p>
-      </div>
-     </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Metas de Ahorro</h2>
+            </div>
+            <form id="savings-form">
+                <div class="form-group">
+                    <label for="goal-name">Nombre de la Meta</label>
+                    <input type="text" id="goal-name" placeholder="Ej: Vacaciones, Coche nuevo..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="goal-amount">Cantidad Objetivo (€)</label>
+                    <input type="number" id="goal-amount" placeholder="0.00" step="0.01" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="goal-date">Fecha Objetivo</label>
+                    <input type="date" id="goal-date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="current-saved">Cantidad Ahorrada Actualmente (€)</label>
+                    <input type="number" id="current-saved" placeholder="0.00" step="0.01" min="0" required>
+                </div>
+
+                <button type="submit">Crear Meta de Ahorro</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Mis Metas de Ahorro</h2>
+            </div>
+            <div id="savings-list">
+                <!-- Las metas se cargarán dinámicamente aquí -->
+                <p style="text-align: center; padding: 20px;">No hay metas de ahorro</p>
+            </div>
+        </div>
     </div>
-    <div class="card" style="margin-top: 20px;">
-     <div class="card-header">
-      <h2>
-       &Uacute;ltimas Transacciones
-      </h2>
-      <button class="btn-danger" id="clear-transactions">
-       Borrar Todo
-      </button>
-     </div>
-     <div class="transactions" id="transaction-list">
-      <!-- muestra transacciones -->
-      <p style="text-align: center; padding: 20px;">
-       No hay transacciones
-      </p>
-     </div>
+ </div>
+
+    <!-- Sección de Control de Deudas -->
+  <div id="debts-section" class="section">
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-header">
+                <h2>Control de Deudas</h2>
+            </div>
+            <form id="debt-form">
+                <div class="form-group">
+                    <label for="debt-name">Nombre de la Deuda</label>
+                    <input type="text" id="debt-name" placeholder="Ej: Préstamo coche, Hipoteca..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="debt-amount">Cantidad Total (€)</label>
+                    <input type="number" id="debt-amount" placeholder="0.00" step="0.01" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="debt-paid">Cantidad Pagada (€)</label>
+                    <input type="number" id="debt-paid" placeholder="0.00" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="debt-interest">Tasa de Interés Anual (%)</label>
+                    <input type="number" id="debt-interest" placeholder="0.00" step="0.01" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="debt-date">Fecha Límite de Pago</label>
+                    <input type="date" id="debt-date">
+                </div>
+
+                <button type="submit">Añadir Deuda</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Mis Deudas</h2>
+            </div>
+            <div id="debts-list">
+                <!-- Las deudas se cargarán dinámicamente aquí -->
+                <p style="text-align: center; padding: 20px;">No hay deudas registradas</p>
+            </div>
+        </div>
     </div>
-   </div>
-  </div>
-  <!-- Sección de Metas de Ahorro -->
-  <div class="section" id="savings-section">
-   <div class="dashboard">
-    <div class="card">
-     <div class="card-header">
-      <h2>
-       Metas de Ahorro
-      </h2>
-     </div>
-     <form id="savings-form">
-      <div class="form-group">
-       <label for="goal-name">
-        Nombre de la Meta
-       </label>
-       <input id="goal-name" placeholder="Ej: Vacaciones, Coche nuevo..." required="" type="text"/>
-      </div>
-      <div class="form-group">
-       <label for="goal-amount">
-        Cantidad Objetivo (&euro;)
-       </label>
-       <input id="goal-amount" min="1" placeholder="0.00" required="" step="0.01" type="number"/>
-      </div>
-      <div class="form-group">
-       <label for="goal-date">
-        Fecha Objetivo
-       </label>
-       <input id="goal-date" required="" type="date"/>
-      </div>
-      <div class="form-group">
-       <label for="current-saved">
-        Cantidad Ahorrada Actualmente (&euro;)
-       </label>
-       <input id="current-saved" min="0" placeholder="0.00" required="" step="0.01" type="number"/>
-      </div>
-      <button type="submit">
-       Crear Meta de Ahorro
-      </button>
-     </form>
-    </div>
-    <div class="card">
-     <div class="card-header">
-      <h2>
-       Mis Metas de Ahorro
-      </h2>
-     </div>
-     <div id="savings-list">
-      <!-- Las metas se cargarán dinámicamente aquí -->
-      <p style="text-align: center; padding: 20px;">
-       No hay metas de ahorro
-      </p>
-     </div>
-    </div>
-   </div>
-  </div>
-  <!-- Sección de Control de Deudas -->
-  <div class="section" id="debts-section">
-   <div class="dashboard">
-    <div class="card">
-     <div class="card-header">
-      <h2>
-       Control de Deudas
-      </h2>
-     </div>
-     <form id="debt-form">
-      <div class="form-group">
-       <label for="debt-name">
-        Nombre de la Deuda
-       </label>
-       <input id="debt-name" placeholder="Ej: Pr&eacute;stamo coche, Hipoteca..." required="" type="text"/>
-      </div>
-      <div class="form-group">
-       <label for="debt-amount">
-        Cantidad Total (&euro;)
-       </label>
-       <input id="debt-amount" min="1" placeholder="0.00" required="" step="0.01" type="number"/>
-      </div>
-      <div class="form-group">
-       <label for="debt-paid">
-        Cantidad Pagada (&euro;)
-       </label>
-       <input id="debt-paid" min="0" placeholder="0.00" required="" step="0.01" type="number"/>
-      </div>
-      <div class="form-group">
-       <label for="debt-interest">
-        Tasa de Inter&eacute;s Anual (%)
-       </label>
-       <input id="debt-interest" min="0" placeholder="0.00" step="0.01" type="number"/>
-      </div>
-      <div class="form-group">
-       <label for="debt-date">
-        Fecha L&iacute;mite de Pago
-       </label>
-       <input id="debt-date" type="date"/>
-      </div>
-      <button type="submit">
-       A&ntilde;adir Deuda
-      </button>
-     </form>
-    </div>
-    <div class="card">
-     <div class="card-header">
-      <h2>
-       Mis Deudas
-      </h2>
-     </div>
-     <div id="debts-list">
-      <!-- Las deudas se cargarán dinámicamente aquí -->
-      <p style="text-align: center; padding: 20px;">
-       No hay deudas registradas
-      </p>
-     </div>
-    </div>
-   </div>
-  </div>
-  <!-- Sección de Reportes / Historial -->
-  <div class="section" id="reports-section">
-   <div class="card">
+ </div>
+
+    
+    
+<!-- Sección de Reportes / Historial -->
+<div id="reports-section" class="section">
+
+<div class="card">
     <div class="card-header">
-     <h2>
-      Resumen de Transacciones
-     </h2>
+        <h2>Resumen de Transacciones</h2>
     </div>
     <div style="padding: 10px;">
-     <strong>
-      Ingresos totales:
-     </strong>
-     <span class="positive" id="report-total-income">
-      Q0.00
-     </span>
-     <br/>
-     <strong>
-      Gastos totales:
-     </strong>
-     <span class="negative" id="report-total-expense">
-      Q0.00
-     </span>
-     <br/>
-     <strong>
-      Balance:
-     </strong>
-     <span id="report-balance">
-      Q0.00
-     </span>
+        <strong>Ingresos totales:</strong> <span id="report-total-income" class="positive">Q0.00</span><br>
+        <strong>Gastos totales:</strong> <span id="report-total-expense" class="negative">Q0.00</span><br>
+        <strong>Balance:</strong> <span id="report-balance">Q0.00</span>
     </div>
-   </div>
-   <div class="card">
+</div>
+
+<div class="card">
     <div class="card-header">
-     <h2>
-      Historial de Transacciones
-     </h2>
+        <h2>Historial de Transacciones</h2>
     </div>
     <div style="padding: 10px;">
-     <label for="report-filter">
-      Filtrar por:
-     </label>
-     <select id="report-filter">
-      <option value="all">
-       Todas
-      </option>
-      <option value="income">
-       Ingresos
-      </option>
-      <option value="expense">
-       Gastos
-      </option>
-     </select>
+        <label for="report-filter">Filtrar por:</label>
+        <select id="report-filter">
+            <option value="all">Todas</option>
+            <option value="income">Ingresos</option>
+            <option value="expense">Gastos</option>
+        </select>
     </div>
-    <div class="transactions" id="report-list">
-     <p style="text-align: center; padding: 20px;">
-      No hay transacciones
-     </p>
+    <div id="report-list" class="transactions">
+        <p style="text-align: center; padding: 20px;">No hay transacciones</p>
     </div>
-   </div>
-   <div class="dashboard">
-    <div class="card">
-     <div class="card-header">
-      <h2>
-       Reportes / Historial
-      </h2>
-     </div>
-     <p style="padding: 20px;">
-      Aqu&iacute; podr&aacute;s consultar reportes detallados de tus ingresos, gastos y transacciones por categor&iacute;a. (Funcionalidad en desarrollo)
-     </p>
+</div>
+
+    <div class="dashboard">
+        <div class="card">
+            <div class="card-header">
+                <h2>Reportes / Historial</h2>
+            </div>
+            <p style="padding: 20px;">Aquí podrás consultar reportes detallados de tus ingresos, gastos y transacciones por categoría. (Funcionalidad en desarrollo)</p>
+        </div>
     </div>
-   </div>
-  </div>
-  <!-- Sección de Presupuestos -->
-  <div class="section" id="budgets-section">
-   <div class="card">
+</div>
+
+<!-- Sección de Presupuestos -->
+<div id="budgets-section" class="section">
+
+<div class="card">
     <div class="card-header">
-     <h2>
-      Crear Presupuesto
-     </h2>
+        <h2>Crear Presupuesto</h2>
     </div>
     <form id="budget-form" style="padding: 10px;">
-     <div class="form-group">
-      <label for="budget-category">
-       Categor&iacute;a
-      </label>
-      <select id="budget-category" required="">
-       <option value="">
-        Selecciona una categor&iacute;a
-       </option>
-      </select>
-     </div>
-     <div class="form-group">
-      <label for="budget-amount">
-       Monto (Q)
-      </label>
-      <input id="budget-amount" min="1" placeholder="0.00" required="" step="0.01" type="number"/>
-     </div>
-     <button type="submit">
-      Crear Presupuesto
-     </button>
+        <div class="form-group">
+            <label for="budget-category">Categoría</label>
+            <select id="budget-category" required>
+                <option value="">Selecciona una categoría</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="budget-amount">Monto (Q)</label>
+            <input type="number" id="budget-amount" placeholder="0.00" step="0.01" min="1" required>
+        </div>
+        <button type="submit">Crear Presupuesto</button>
     </form>
-   </div>
-   <div class="card">
+</div>
+
+<div class="card">
     <div class="card-header">
-     <h2>
-      Mis Presupuestos
-     </h2>
+        <h2>Mis Presupuestos</h2>
     </div>
     <div id="budget-list">
-     <p style="text-align: center; padding: 20px;">
-      No hay presupuestos
-     </p>
+        <p style="text-align: center; padding: 20px;">No hay presupuestos</p>
     </div>
-   </div>
-  </div>
-  <footer>
-   <div class="container">
-    <p>
-     Mayli &copy; 2025 - Finanzas personales
-    </p>
-   </div>
-  </footer>
-  <script>
-   // Categorías para ingresos y gastos
+</div>
+</div>
+
+<footer>
+        <div class="container">
+            <p>Mayli &copy; 2025 - Finanzas personales</p>
+        </div>
+    </footer>
+
+    <script>
+        // Categorías para ingresos y gastos
         const categories = {
             income: ['Salario', 'Inversiones', 'Regalos', 'Ventas', 'Otros'],
             expense: ['Alimentación', 'Vivienda', 'Transporte', 'Ocio', 'Salud', 'Educación', 'Deudas', 'Otros']
@@ -986,6 +725,7 @@ input, select, textarea {
                 .reduce((total, transaction) => total + transaction.amount, 0);
                 
             const balance = income - expenses;
+            
             
             totalBalanceEl.textContent = formatCurrency(balance);
             totalIncomeEl.textContent = formatCurrency(income);
@@ -1682,9 +1422,11 @@ updateDebtsList();
 if (typeSelect.value === 'expense') {
     updateCategories();
 }
-  </script>
-  <script>
-   if ('serviceWorker' in navigator) {
+    
+    </script>
+
+<script>
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js').then(function(registration) {
             console.log('Service Worker registrado con éxito:', registration.scope);
@@ -1693,223 +1435,7 @@ if (typeSelect.value === 'expense') {
         });
     });
 }
-  </script>
-  <div id="gamification-section">
-   <h3>
-    Mis Logros
-   </h3>
-   <div class="medal-container" id="medalContainer">
-   </div>
-  </div>
-  <div id="suggestion-section">
-   <h3>
-    Sugerencias de ahorro
-   </h3>
-   <div class="suggestion-box" id="suggestionBox">
-    A&uacute;n no hay sugerencias. Comienza a registrar tus gastos.
-   </div>
-  </div>
-  <script>
-   document.addEventListener('DOMContentLoaded', () => {
-  const medalContainer = document.getElementById('medalContainer');
-  const suggestionBox = document.getElementById('suggestionBox');
+</script>
 
-  // Simulación de datos de gastos (esto luego se conecta con tus datos reales)
-  let totalGastos = 5000;
-  let totalAhorros = 1500;
-
-  // Lógica de medallas simples
-  const medallas = [];
-  if (totalAhorros >= 1000) {
-    medallas.push('Ahorrista Inicial');
-  }
-  if (totalAhorros >= 3000) {
-    medallas.push('Maestro del Ahorro');
-  }
-  if (totalGastos <= 2000) {
-    medallas.push('Gasto Controlado');
-  }
-
-  // Mostrar medallas
-  medalContainer.innerHTML = '';
-  if (medallas.length === 0) {
-    medalContainer.innerHTML = '<p>¡Aún no has ganado medallas! Ahorra más y controla tus gastos.</p>';
-  } else {
-    medallas.forEach(med => {
-      const div = document.createElement('div');
-      div.className = 'medal';
-      div.textContent = med;
-      medalContainer.appendChild(div);
-    });
-  }
-
-  // Sugerencias de ahorro basadas en hábitos simples
-  let sugerencia = '';
-  if (totalGastos > 4000) {
-    sugerencia = 'Has gastado bastante este mes. Intenta reducir gastos en entretenimiento y comidas fuera.';
-  } else if (totalAhorros < 1000) {
-    sugerencia = 'Tu ahorro está algo bajo. Intenta destinar un 10% más de tus ingresos al ahorro.';
-  } else {
-    sugerencia = '¡Vas bien! Sigue así para alcanzar tus metas financieras.';
-  }
-  suggestionBox.textContent = sugerencia;
-});
-  </script>
-  <div class="section-box">
-   <h3>
-    Simulador de Metas
-   </h3>
-   <div class="input-group">
-    <label>
-     Meta ($):
-    </label>
-    <input id="metaTotal" placeholder="Ej: 10000" type="number"/>
-   </div>
-   <div class="input-group">
-    <label>
-     Meses para lograrlo:
-    </label>
-    <input id="metaMeses" placeholder="Ej: 12" type="number"/>
-   </div>
-   <button class="btn" onclick="calcularMeta()">
-    Calcular
-   </button>
-   <p id="resultadoMeta">
-   </p>
-  </div>
-  <div class="section-box">
-   <h3>
-    Escaneo de Tickets (Ingreso Manual)
-   </h3>
-   <div class="input-group">
-    <label>
-     Monto ($):
-    </label>
-    <input id="ticketMonto" placeholder="Ej: 250" type="number"/>
-   </div>
-   <div class="input-group">
-    <label>
-     Categor&iacute;a:
-    </label>
-    <select id="ticketCategoria">
-     <option>
-      Comida
-     </option>
-     <option>
-      Transporte
-     </option>
-     <option>
-      Entretenimiento
-     </option>
-     <option>
-      Otros
-     </option>
-    </select>
-   </div>
-   <button class="btn" onclick="agregarGastoManual()">
-    Agregar Gasto
-   </button>
-  </div>
-  <div class="section-box">
-   <h3>
-    Presupuesto por Categor&iacute;a
-   </h3>
-   <canvas height="200" id="presupuestoChart">
-   </canvas>
-  </div>
-  <script>
-   let presupuestos = {
-  'Comida': { total: 1000, gastado: 0 },
-  'Transporte': { total: 800, gastado: 0 },
-  'Entretenimiento': { total: 500, gastado: 0 },
-  'Otros': { total: 700, gastado: 0 }
-};
-
-// Simulador de metas
-function calcularMeta() {
-  const total = parseFloat(document.getElementById('metaTotal').value);
-  const meses = parseInt(document.getElementById('metaMeses').value);
-  const resultado = document.getElementById('resultadoMeta');
-
-  if (total > 0 && meses > 0) {
-    const mensual = (total / meses).toFixed(2);
-    resultado.textContent = `Debes ahorrar $${mensual} por mes para alcanzar tu meta.`;
-  } else {
-    resultado.textContent = 'Por favor ingresa valores válidos.';
-  }
-}
-
-// Agregar gasto manual (tipo escaneo ticket)
-function agregarGastoManual() {
-  const monto = parseFloat(document.getElementById('ticketMonto').value);
-  const categoria = document.getElementById('ticketCategoria').value;
-
-  if (monto > 0) {
-    presupuestos[categoria].gastado += monto;
-    actualizarGraficoPresupuesto();
-    alert(`Se ha registrado un gasto de $${monto} en ${categoria}.`);
-  } else {
-    alert('Ingresa un monto válido.');
-  }
-}
-
-// Graficar presupuestos
-let chart;
-function actualizarGraficoPresupuesto() {
-  const labels = Object.keys(presupuestos);
-  const gastado = labels.map(cat => presupuestos[cat].gastado);
-  const disponible = labels.map(cat => Math.max(presupuestos[cat].total - presupuestos[cat].gastado, 0));
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Gastado',
-        data: gastado,
-        backgroundColor: 'rgba(255,99,132,0.6)'
-      },
-      {
-        label: 'Disponible',
-        data: disponible,
-        backgroundColor: 'rgba(75,192,192,0.6)'
-      }
-    ]
-  };
-
-  const ctx = document.getElementById('presupuestoChart').getContext('2d');
-  if (chart) {
-    chart.destroy();
-  }
-  chart = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-}
-
-// Inicializar gráfico al cargar
-document.addEventListener('DOMContentLoaded', actualizarGraficoPresupuesto);
-  </script>
-  <script>
-   function mostrarSeccion(id) {
-  var secciones = document.querySelectorAll('.section');
-  secciones.forEach(function(sec) { sec.style.display = 'none'; });
-  document.getElementById(id).style.display = 'block';
-}
-// Mostrar dashboard por defecto
-document.addEventListener('DOMContentLoaded', function() {
-  var secciones = document.querySelectorAll('.section');
-  secciones.forEach(function(sec) { sec.style.display = 'none'; });
-  var dashboard = document.querySelector('.section.active');
-  if (dashboard) dashboard.style.display = 'block';
-});
-  </script>
- </body>
+</body>
 </html>
