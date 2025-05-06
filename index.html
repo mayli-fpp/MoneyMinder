@@ -628,36 +628,35 @@ input, select, textarea {
 </div>
 
 <!-- Sección de Presupuestos -->
-<div id="budgets-section" class="section">
+<section id="presupuestos" class="seccion">
+    <h2>Presupuestos</h2>
+    <form id="presupuesto-form">
+        <label for="presupuesto-nombre">Nombre del presupuesto:</label>
+        <input type="text" id="presupuesto-nombre" required>
 
-<div class="card">
-    <div class="card-header">
-        <h2>Crear Presupuesto</h2>
-    </div>
-    <form id="budget-form" style="padding: 10px;">
-        <div class="form-group">
-            <label for="budget-category">Categoría</label>
-            <select id="budget-category" required>
-                <option value="">Selecciona una categoría</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="budget-amount">Monto (Q)</label>
-            <input type="number" id="budget-amount" placeholder="0.00" step="0.01" min="1" required>
-        </div>
-        <button type="submit">Crear Presupuesto</button>
+        <label for="presupuesto-monto">Monto total:</label>
+        <input type="number" id="presupuesto-monto" required>
+
+        <button type="submit">Agregar presupuesto</button>
     </form>
-</div>
 
-<div class="card">
-    <div class="card-header">
-        <h2>Mis Presupuestos</h2>
-    </div>
-    <div id="budget-list">
-        <p style="text-align: center; padding: 20px;">No hay presupuestos</p>
-    </div>
-</div>
-</div>
+    <h3>Lista de presupuestos</h3>
+    <table id="tabla-presupuestos">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Asignado</th>
+                <th>Gastado</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Presupuestos aquí -->
+        </tbody>
+    </table>
+</section>
+
 
 <footer>
         <div class="container">
@@ -1335,85 +1334,86 @@ function updateReport() {
 
 // FUNCIONES PRESUPUESTOS
 
-budgetForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const category = budgetCategorySelect.value;
-    const amount = parseFloat(budgetAmountInput.value);
+document.addEventListener('DOMContentLoaded', () => {
+    const presupuestoForm = document.getElementById('presupuesto-form');
+    const presupuestoNombre = document.getElementById('presupuesto-nombre');
+    const presupuestoMonto = document.getElementById('presupuesto-monto');
+    const tablaPresupuestos = document.getElementById('tabla-presupuestos').querySelector('tbody');
 
-    if (!category || isNaN(amount) || amount <= 0) {
-        alert('Por favor, selecciona una categoría y un monto válido.');
-        return;
+    let presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
+
+    function guardarPresupuestos() {
+        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
     }
 
-    const budget = { id: Date.now(), category, amount };
-    budgets.push(budget);
-    saveBudgets();
-    updateBudgetList();
-    budgetForm.reset();
-    populateBudgetCategories();
+    function renderizarPresupuestos() {
+        tablaPresupuestos.innerHTML = '';
+        presupuestos.forEach((presupuesto, index) => {
+            const fila = document.createElement('tr');
 
-    alert('Presupuesto creado y guardado con éxito.');
-});
+            const celdaNombre = document.createElement('td');
+            celdaNombre.textContent = presupuesto.nombre;
+            fila.appendChild(celdaNombre);
 
+            const celdaAsignado = document.createElement('td');
+            celdaAsignado.textContent = $${presupuesto.monto.toFixed(2)};
+            fila.appendChild(celdaAsignado);
 
-function saveBudgets() {
-    localStorage.setItem('budgets', JSON.stringify(budgets));
-}
+            const celdaGastado = document.createElement('td');
+            celdaGastado.textContent = $${presupuesto.gastado.toFixed(2)};
+            fila.appendChild(celdaGastado);
 
-function updateBudgetList() {
-    if (budgets.length === 0) {
-        budgetList.innerHTML = '<p style="text-align: center; padding: 20px;">No hay presupuestos</p>';
-        return;
-    }
+            const celdaDisponible = document.createElement('td');
+            const disponible = presupuesto.monto - presupuesto.gastado;
+            celdaDisponible.textContent = $${disponible.toFixed(2)};
+            celdaDisponible.style.color = disponible <= 0 ? 'red' : 'green';
+            fila.appendChild(celdaDisponible);
 
-    budgetList.innerHTML = '';
-    budgets.forEach(b => {
-        const spent = transactions.filter(t => t.type === 'expense' && t.category === b.category).reduce((sum, t) => sum + t.amount, 0);
-        const percent = Math.min((spent / b.amount) * 100, 100).toFixed(1);
+            const celdaAcciones = document.createElement('td');
 
-        const budgetEl = document.createElement('div');
-        budgetEl.classList.add('goal-item');
-        const categoryName = categories.expense.find(c => c === b.category) || b.category;
+            const btnAbonar = document.createElement('button');
+            btnAbonar.textContent = 'Abonar';
+            btnAbonar.addEventListener('click', () => {
+                const abono = parseFloat(prompt('Ingresa el monto del gasto o abono:'));
+                if (!isNaN(abono) && abono > 0) {
+                    presupuesto.gastado += abono;
+                    if (presupuesto.gastado >= presupuesto.monto) {
+                        alert(¡Atención! Has alcanzado o superado el presupuesto de ${presupuesto.nombre});
+                    }
+                    guardarPresupuestos();
+                    renderizarPresupuestos();
+                } else {
+                    alert('Monto inválido.');
+                }
+            });
+            celdaAcciones.appendChild(btnAbonar);
 
-        budgetEl.innerHTML = `
-            <div><strong>${categoryName}</strong></div>
-            <div>Presupuesto: Q${b.amount.toFixed(2)}</div>
-            <div class="progress-bar">
-                <div class="progress" style="width: ${percent}%; background-color: ${spent > b.amount ? '#e74c3c' : ''}">
-                    <span class="progress-text">${percent}%</span>
-                </div>
-            </div>
-            <div>Gastado: Q${spent.toFixed(2)} de Q${b.amount.toFixed(2)}</div>
-            <div class="goal-actions">
-                <button class="delete-budget btn-small btn-danger" data-id="${b.id}">Eliminar</button>
-            </div>
-        `;
+            const btnEditar = document.createElement('button');
+            btnEditar.textContent = 'Editar';
+            btnEditar.addEventListener('click', () => {
+                const nuevoNombre = prompt('Nuevo nombre:', presupuesto.nombre);
+                const nuevoMonto = parseFloat(prompt('Nuevo monto total:', presupuesto.monto));
+                if (nuevoNombre && !isNaN(nuevoMonto) && nuevoMonto >= presupuesto.gastado) {
+                    presupuesto.nombre = nuevoNombre;
+                    presupuesto.monto = nuevoMonto;
+                    guardarPresupuestos();
+                    renderizarPresupuestos();
+                } else {
+                    alert('Datos inválidos. El nuevo monto no puede ser menor al gastado.');
+                }
+            });
+            celdaAcciones.appendChild(btnEditar);
 
-        budgetList.appendChild(budgetEl);
-    });
+            const btnEliminar = document.createElement('button');
+            btnEliminar.textContent = 'Eliminar';
+            btnEliminar.addEventListener('click', () => {
+                if (confirm(¿Eliminar presupuesto "${presupuesto.nombre}"?)) {
+                    presupuestos.splice(index, 1);
+                    guardarPresupuestos();
+                    renderizarPresupuestos();
+                }
+            });
 
-    document.querySelectorAll('.delete-budget').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = parseInt(this.dataset.id);
-            budgets = budgets.filter(b => b.id !== id);
-            saveBudgets();
-            updateBudgetList();
-        });
-    });
-}
-
-reportFilter.addEventListener('change', updateReport);
-
-
-
-// Actualizar las categorías añadiendo las nuevas
-categories.expense.push('Ahorro', 'Deudas');
-
-// Re-cargar presupuestos guardados por si acaso
-budgets = JSON.parse(localStorage.getItem('budgets')) || [];
-populateBudgetCategories();
-updateReport();
-updateBudgetList();
 
 // Inicializar la aplicación con las nuevas funcionalidades
 updateSavingsList();
